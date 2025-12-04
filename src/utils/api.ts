@@ -17,7 +17,7 @@ export function buildQueryString(params: ApiBillQueryParams): string {
   });
 
   const queryString = searchParams.toString();
-  console.log("Query String:", queryString);
+
   return queryString ? `?${queryString}` : "";
 }
 
