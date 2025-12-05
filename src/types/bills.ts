@@ -74,8 +74,8 @@ export type BillStatus =
 export type BillSource = "Government" | "Private Member";
 
 export interface ApiBillQueryParams {
-  skip?: number;
-  limit?: number;
+  skip: number;
+  limit: number;
   bill_status?: BillStatus[];
   bill_source?: string[];
   bill_year?: string;

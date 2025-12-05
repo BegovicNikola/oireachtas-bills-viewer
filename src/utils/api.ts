@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "@/constants/api";
 import type { ApiBillQueryParams, ApiBillResponse } from "@/types/bills";
+import { billsResponseMapper } from "@/utils/mapper";
 
 export function buildQueryString(params: ApiBillQueryParams): string {
   const searchParams = new URLSearchParams();
@@ -17,7 +18,6 @@ export function buildQueryString(params: ApiBillQueryParams): string {
   });
 
   const queryString = searchParams.toString();
-
   return queryString ? `?${queryString}` : "";
 }
 
@@ -33,5 +33,6 @@ export async function fetchBills(
     throw new Error(`Failed to fetch bills: ${response.statusText}`);
   }
 
-  return response.json();
+  const data = await response.json();
+  return billsResponseMapper(data);
 }
