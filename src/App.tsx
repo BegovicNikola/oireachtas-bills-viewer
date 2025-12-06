@@ -1,6 +1,6 @@
 import { BillsTable } from "@/components/BillsTable";
 import { useBills } from "@/hooks/useBills";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 function App() {
   const {
@@ -20,7 +20,7 @@ function App() {
 
   return (
     <Container>
-      <h1>Oireachtas Bills Viewer</h1>
+      <Typography variant="h1">Oireachtas Bills Viewer</Typography>
       <BillsTable bills={billsResponse?.results} />
     </Container>
   );

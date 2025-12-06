@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { format } from "date-fns";
 
 export function BillsTable({ bills }: { bills: Bill[] | undefined }) {
   return (
@@ -17,31 +18,48 @@ export function BillsTable({ bills }: { bills: Bill[] | undefined }) {
           <TableRow>
             <TableCell>Number</TableCell>
             <TableCell>Type</TableCell>
-            <TableCell>Year</TableCell>
-            <TableCell>Status</TableCell>
             <TableCell>Source</TableCell>
+            <TableCell>Status</TableCell>
             <TableCell>Sponsors</TableCell>
+            <TableCell>Last Updated</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {bills ? (
-            bills.map((bill) => (
-              <TableRow key={`${bill.bill.billYear}/${bill.bill.billNo}`}>
-                <TableCell>{`${bill.bill.billYear}/${bill.bill.billNo}`}</TableCell>
-                <TableCell>{bill.bill.billType}</TableCell>
-                <TableCell>{bill.bill.billYear}</TableCell>
-                <TableCell>{bill.bill.status}</TableCell>
-                <TableCell>{bill.bill.source}</TableCell>
-                <TableCell>
-                  {bill.bill.sponsors
-                    ?.map((sponsor) => sponsor.sponsor.as?.showAs)
-                    .join(", ")}
-                </TableCell>
-              </TableRow>
-            ))
+          {bills && bills.length > 0 ? (
+            bills.map((bill) => {
+              const {
+                billYear,
+                billNo,
+                billType,
+                source,
+                status,
+                sponsors,
+                lastUpdated,
+              } = bill.bill;
+
+              const sponsorsList = sponsors
+                ?.map(
+                  (sponsor) =>
+                    sponsor.sponsor.by?.showAs ||
+                    sponsor.sponsor.as?.showAs ||
+                    "N/A",
+                )
+                .join(", ");
+
+              return (
+                <TableRow key={`${billYear}/${billNo}`}>
+                  <TableCell>{`${billYear}/${billNo}`}</TableCell>
+                  <TableCell>{billType}</TableCell>
+                  <TableCell>{source}</TableCell>
+                  <TableCell>{status}</TableCell>
+                  <TableCell>{sponsorsList}</TableCell>
+                  <TableCell>{format(lastUpdated, "dd MMM yyyy")}</TableCell>
+                </TableRow>
+              );
+            })
           ) : (
             <TableRow>
-              <TableCell colSpan={5} align="center">
+              <TableCell colSpan={6} align="center">
                 No bills found
               </TableCell>
             </TableRow>
