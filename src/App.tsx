@@ -1,8 +1,10 @@
-import { useBills } from "./hooks/useBills";
+import { BillsTable } from "@/components/BillsTable";
+import { useBills } from "@/hooks/useBills";
+import { Container } from "@mui/material";
 
 function App() {
   const {
-    data: bills,
+    data: billsResponse,
     isLoading: billsLoading,
     error: billsError,
   } = useBills({
@@ -14,12 +16,13 @@ function App() {
   if (billsLoading) return <div>Loading...</div>;
   if (billsError) return <div>Error: {billsError.message}</div>;
 
-  console.log(bills);
+  console.log(billsResponse);
 
   return (
-    <div>
+    <Container>
       <h1>Oireachtas Bills Viewer</h1>
-    </div>
+      <BillsTable bills={billsResponse?.results} />
+    </Container>
   );
 }
 
