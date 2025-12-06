@@ -21,6 +21,21 @@ export function buildQueryString(params: ApiBillQueryParams): string {
   return queryString ? `?${queryString}` : "";
 }
 
+export function normalizeBillParams(
+  params: ApiBillQueryParams,
+): ApiBillQueryParams {
+  const { skip, limit, bill_status, bill_source, bill_year } = params;
+
+  return {
+    skip: skip ?? 0,
+    limit: limit ?? 50,
+    // Sorting the arrays to ensure consistent serialization
+    bill_status: bill_status?.slice().sort(),
+    bill_source: bill_source?.slice().sort(),
+    bill_year: bill_year,
+  };
+}
+
 export async function fetchBills(
   params: ApiBillQueryParams,
 ): Promise<ApiBillResponse> {
