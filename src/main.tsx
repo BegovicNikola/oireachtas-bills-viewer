@@ -4,11 +4,17 @@ import { createRoot } from "react-dom/client";
 
 import App from "@/App.tsx";
 import { queryClient } from "@/lib/queryClient";
+import { theme } from "@/lib/theme";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>,
 );
