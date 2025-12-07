@@ -35,22 +35,33 @@ export interface Sponsor {
 // TODO: In NextJS version of the app use billSort & contextDate properties
 
 export interface Bill {
-  bill: {
-    act: Act | null;
-    billNo: string;
-    billType: string;
-    billYear: string;
-    lastUpdated: string;
-    longTitleEn: string | null;
-    longTitleGa: string | null;
-    method: string;
-    shortTitleEn: string;
-    shortTitleGa: string;
-    source: string;
-    sponsors: Sponsor[] | null;
-    status: string;
-    uri: string;
+  act: Act | null;
+  billNo: string;
+  billType: string;
+  billYear: string;
+  lastUpdated: string;
+  longTitleEn: string | null;
+  longTitleGa: string | null;
+  method: string;
+  shortTitleEn: string;
+  shortTitleGa: string;
+  source: string;
+  sponsors: Sponsor[] | null;
+  status: string;
+  uri: string;
+}
+
+// Raw API response structure (before mapping)
+export interface RawApiBillResponse {
+  head: {
+    counts: {
+      billCount: number;
+      resultCount: number;
+    };
   };
+  results: Array<{
+    bill: Bill;
+  }>;
 }
 
 export interface ApiBillResponse {

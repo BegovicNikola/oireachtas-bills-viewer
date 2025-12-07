@@ -1,9 +1,11 @@
-import type { ApiBillResponse } from "@/types/bills";
+import type { ApiBillResponse, RawApiBillResponse } from "@/types/bills";
 
-export function billsResponseMapper(bills: ApiBillResponse): ApiBillResponse {
+export function billsResponseMapper(
+  bills: RawApiBillResponse,
+): ApiBillResponse {
   return {
     head: bills.head,
-    results: bills.results.map((bill) => {
+    results: bills.results.map(({ bill }) => {
       const {
         act,
         billNo,
@@ -19,24 +21,22 @@ export function billsResponseMapper(bills: ApiBillResponse): ApiBillResponse {
         sponsors,
         status,
         uri,
-      } = bill.bill;
+      } = bill;
       return {
-        bill: {
-          act,
-          billNo,
-          billType,
-          billYear,
-          lastUpdated,
-          longTitleEn,
-          longTitleGa,
-          method,
-          shortTitleEn,
-          shortTitleGa,
-          source,
-          sponsors,
-          status,
-          uri,
-        },
+        act,
+        billNo,
+        billType,
+        billYear,
+        lastUpdated,
+        longTitleEn,
+        longTitleGa,
+        method,
+        shortTitleEn,
+        shortTitleGa,
+        source,
+        sponsors,
+        status,
+        uri,
       };
     }),
   };

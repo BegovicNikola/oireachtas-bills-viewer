@@ -8,10 +8,7 @@ export function BillTableBody({ bills }: { bills: Bill[] }) {
     <TableBody>
       {bills.length > 0 ? (
         bills.map((bill) => (
-          <BillTableRow
-            key={`${bill.bill.billYear}/${bill.bill.billNo}`}
-            bill={bill}
-          />
+          <BillTableRow key={`${bill.billYear}/${bill.billNo}`} bill={bill} />
         ))
       ) : (
         <TableRow>

@@ -6,22 +6,22 @@ export const billColumns: BillColumn[] = [
   {
     id: "number",
     label: "Number",
-    render: (bill) => `${bill.bill.billYear}/${bill.bill.billNo}`,
+    render: (bill) => `${bill.billYear}/${bill.billNo}`,
   },
   {
     id: "type",
     label: "Type",
-    render: (bill) => bill.bill.billType,
+    render: (bill) => bill.billType,
   },
   {
     id: "source",
     label: "Source",
-    render: (bill) => bill.bill.source,
+    render: (bill) => bill.source,
   },
   {
     id: "status",
     label: "Status",
-    render: (bill) => bill.bill.status,
+    render: (bill) => bill.status,
   },
   {
     id: "sponsors",
@@ -29,7 +29,7 @@ export const billColumns: BillColumn[] = [
     render: (bill) => {
       // TODO: Bold the primary sponsor
       return (
-        bill.bill.sponsors
+        bill.sponsors
           ?.map(
             (sponsor) =>
               sponsor.sponsor.by?.showAs || sponsor.sponsor.as?.showAs || "N/A",
@@ -41,6 +41,6 @@ export const billColumns: BillColumn[] = [
   {
     id: "lastUpdated",
     label: "Last Updated",
-    render: (bill) => format(bill.bill.lastUpdated, "dd MMM yyyy"),
+    render: (bill) => format(bill.lastUpdated, "dd MMM yyyy"),
   },
 ];

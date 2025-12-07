@@ -4,7 +4,7 @@ import { TableCell, TableRow } from "@mui/material";
 
 export function BillTableRow({ bill }: { bill: Bill }) {
   return (
-    <TableRow key={`${bill.bill.billYear}/${bill.bill.billNo}`}>
+    <TableRow>
       {billColumns.map((col) => (
         <TableCell key={col.id}>{col.render(bill)}</TableCell>
       ))}
