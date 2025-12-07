@@ -16,12 +16,10 @@ function App() {
   if (billsLoading) return <div>Loading...</div>;
   if (billsError) return <div>Error: {billsError.message}</div>;
 
-  console.log(billsResponse);
-
   return (
     <Container>
       <Typography variant="h1">Oireachtas Bills Viewer</Typography>
-      <BillsTable bills={billsResponse?.results} />
+      <BillsTable bills={billsResponse?.results ?? []} />
     </Container>
   );
 }
