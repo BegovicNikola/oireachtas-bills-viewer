@@ -1,7 +1,8 @@
 import { BillTableRow } from "@/components/BillTableRow";
+import { EmptyTableRow } from "@/components/common/EmptyTableRow";
 import type { Bill } from "@/types/bills";
 import { billColumns } from "@/utils/table";
-import { TableBody, TableCell, TableRow } from "@mui/material";
+import { TableBody } from "@mui/material";
 
 export function BillTableBody({ bills }: { bills: Bill[] }) {
   return (
@@ -11,11 +12,7 @@ export function BillTableBody({ bills }: { bills: Bill[] }) {
           <BillTableRow key={`${bill.billYear}/${bill.billNo}`} bill={bill} />
         ))
       ) : (
-        <TableRow>
-          <TableCell colSpan={billColumns.length} align="center">
-            No bills found
-          </TableCell>
-        </TableRow>
+        <EmptyTableRow colSpan={billColumns.length} message="No bills found" />
       )}
     </TableBody>
   );
