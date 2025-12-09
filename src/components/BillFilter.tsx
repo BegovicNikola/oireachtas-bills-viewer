@@ -2,11 +2,11 @@ import type { BillStatus } from "@/types/bills";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export function BillFilter({
-  onSetBillStatus,
   billStatus,
+  setBillStatus,
 }: {
-  onSetBillStatus: (billStatus: BillStatus[]) => void;
   billStatus: BillStatus[];
+  setBillStatus: (billStatus: BillStatus[]) => void;
 }) {
   return (
     <FormControl>
@@ -16,7 +16,7 @@ export function BillFilter({
         labelId="bill-status-label"
         label="Bill Status"
         value={billStatus}
-        onChange={(e) => onSetBillStatus(e.target.value as BillStatus[])}
+        onChange={(e) => setBillStatus(e.target.value as BillStatus[])}
         sx={{ minWidth: 200, width: "auto" }}
       >
         <MenuItem value="Current">Current</MenuItem>
