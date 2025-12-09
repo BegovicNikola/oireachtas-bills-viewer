@@ -2,10 +2,11 @@ import { BillTableBody } from "@/components/BillTableBody";
 import { BillTableFooter } from "@/components/BillTableFooter";
 import { BillTableHead } from "@/components/BillTableHead";
 import { useBills } from "@/hooks/useBills";
+import type { BillStatus } from "@/types/bills";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useState } from "react";
 
-export function BillsTable() {
+export function BillTable({ billStatus }: { billStatus: BillStatus[] }) {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(50);
 
@@ -16,7 +17,7 @@ export function BillsTable() {
   } = useBills({
     skip: page * limit,
     limit: limit,
-    bill_status: [], // TODO: Make filter dynamic
+    bill_status: billStatus,
   });
 
   if (billsLoading) return <div>Loading...</div>;
