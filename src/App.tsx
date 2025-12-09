@@ -10,6 +10,11 @@ function App() {
   const [limit, setLimit] = useState(50);
   const [billStatus, setBillStatus] = useState<BillStatus[]>([]);
 
+  const handleBillStatusChange = (newStatus: BillStatus[]) => {
+    setBillStatus(newStatus);
+    setPage(0);
+  };
+
   const {
     data: billsResponse,
     isLoading: billsLoading,
@@ -23,7 +28,10 @@ function App() {
   return (
     <Container>
       <Typography variant="h1">Oireachtas Bills Viewer</Typography>
-      <BillFilter billStatus={billStatus} setBillStatus={setBillStatus} />
+      <BillFilter
+        billStatus={billStatus}
+        handleBillStatusChange={handleBillStatusChange}
+      />
       <BillTable
         bills={billsResponse ?? null}
         loading={billsLoading}

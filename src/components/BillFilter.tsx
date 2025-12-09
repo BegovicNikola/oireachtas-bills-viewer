@@ -3,10 +3,10 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export function BillFilter({
   billStatus,
-  setBillStatus,
+  handleBillStatusChange,
 }: {
   billStatus: BillStatus[];
-  setBillStatus: (billStatus: BillStatus[]) => void;
+  handleBillStatusChange: (billStatus: BillStatus[]) => void;
 }) {
   return (
     <FormControl>
@@ -16,7 +16,7 @@ export function BillFilter({
         labelId="bill-status-label"
         label="Bill Status"
         value={billStatus}
-        onChange={(e) => setBillStatus(e.target.value as BillStatus[])}
+        onChange={(e) => handleBillStatusChange(e.target.value as BillStatus[])}
         sx={{ minWidth: 200, width: "auto" }}
       >
         <MenuItem value="Current">Current</MenuItem>
