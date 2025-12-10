@@ -1,5 +1,7 @@
 import { format } from "date-fns";
 
+import { formatSponsors } from "@/utils/sponsors";
+
 import type { BillColumn } from "@/types/table";
 
 // Single source of truth for table columns
@@ -27,17 +29,7 @@ export const billColumns: BillColumn[] = [
   {
     id: "sponsors",
     label: "Sponsors",
-    render: (bill) => {
-      // TODO: Bold the primary sponsor
-      return (
-        bill.sponsors
-          ?.map(
-            (sponsor) =>
-              sponsor.sponsor.by?.showAs || sponsor.sponsor.as?.showAs || "N/A",
-          )
-          .join(", ") || "N/A"
-      );
-    },
+    render: (bill) => formatSponsors(bill.sponsors, 50),
   },
   {
     id: "lastUpdated",
