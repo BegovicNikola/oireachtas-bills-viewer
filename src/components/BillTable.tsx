@@ -2,7 +2,14 @@ import { BillTableBody } from "@/components/BillTableBody";
 import { BillTableFooter } from "@/components/BillTableFooter";
 import { BillTableHead } from "@/components/BillTableHead";
 import type { ApiBillResponse } from "@/types/bills";
-import { Paper, Table, TableContainer } from "@mui/material";
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  Paper,
+  Table,
+  TableContainer,
+} from "@mui/material";
 
 export function BillTable({
   bills,
@@ -21,8 +28,21 @@ export function BillTable({
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
 }) {
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error?.message}</div>;
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Alert severity="error" sx={{ m: 2 }}>
+        Error: {error?.message || "Failed to load bills"}
+      </Alert>
+    );
+  }
 
   return (
     <TableContainer component={Paper}>

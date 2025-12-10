@@ -37,6 +37,8 @@ export function BillFilter({
         <MenuItem value="Withdrawn">Withdrawn</MenuItem>
         <MenuItem value="Enacted">Enacted</MenuItem>
         <MenuItem value="Rejected">Rejected</MenuItem>
+        <MenuItem value="Defeated">Defeated</MenuItem>
+        <MenuItem value="Lapsed">Lapsed</MenuItem>
       </Select>
     </FormControl>
   );
