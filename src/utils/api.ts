@@ -1,10 +1,11 @@
 import { API_ENDPOINTS } from "@/constants/api";
+import { billsResponseMapper } from "@/utils/mapper";
+
 import type {
   ApiBillQueryParams,
   ApiBillResponse,
   RawApiBillResponse,
 } from "@/types/bills";
-import { billsResponseMapper } from "@/utils/mapper";
 
 export function buildQueryString(params: ApiBillQueryParams): string {
   const searchParams = new URLSearchParams();

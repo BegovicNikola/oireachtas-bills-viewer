@@ -1,5 +1,6 @@
-import { billColumns } from "@/utils/table";
 import { TableCell, TableHead, TableRow } from "@mui/material";
+
+import { billColumns } from "@/utils/table";
 
 export function BillTableHead() {
   return (

@@ -1,4 +1,3 @@
-import type { BillStatus } from "@/types/bills";
 import {
   Box,
   Chip,
@@ -7,6 +6,8 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+
+import type { BillStatus } from "@/types/bills";
 
 export function BillFilter({
   billStatus,

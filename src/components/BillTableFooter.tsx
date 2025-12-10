@@ -1,5 +1,6 @@
-import { billColumns } from "@/utils/table";
 import { TableFooter, TablePagination, TableRow } from "@mui/material";
+
+import { billColumns } from "@/utils/table";
 
 export function BillTableFooter({
   total,

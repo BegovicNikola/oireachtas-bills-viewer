@@ -1,7 +1,3 @@
-import { BillTableBody } from "@/components/BillTableBody";
-import { BillTableFooter } from "@/components/BillTableFooter";
-import { BillTableHead } from "@/components/BillTableHead";
-import type { ApiBillResponse } from "@/types/bills";
 import {
   Alert,
   Box,
@@ -10,6 +6,12 @@ import {
   Table,
   TableContainer,
 } from "@mui/material";
+
+import { BillTableBody } from "@/components/BillTableBody";
+import { BillTableFooter } from "@/components/BillTableFooter";
+import { BillTableHead } from "@/components/BillTableHead";
+
+import type { ApiBillResponse } from "@/types/bills";
 
 export function BillTable({
   bills,

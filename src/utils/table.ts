@@ -1,5 +1,6 @@
-import type { BillColumn } from "@/types/table";
 import { format } from "date-fns";
+
+import type { BillColumn } from "@/types/table";
 
 // Single source of truth for table columns
 export const billColumns: BillColumn[] = [

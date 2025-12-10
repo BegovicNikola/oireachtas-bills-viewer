@@ -1,6 +1,8 @@
-import type { Bill } from "@/types/bills";
-import { billColumns } from "@/utils/table";
 import { TableCell, TableRow } from "@mui/material";
+
+import { billColumns } from "@/utils/table";
+
+import type { Bill } from "@/types/bills";
 
 export function BillTableRow({ bill }: { bill: Bill }) {
   return (

@@ -1,9 +1,12 @@
+import { useState } from "react";
+
+import { Container, Typography } from "@mui/material";
+
 import { BillFilter } from "@/components/BillFilter";
 import { BillTable } from "@/components/BillTable";
 import { useBills } from "@/hooks/useBills";
+
 import type { BillStatus } from "@/types/bills";
-import { Container, Typography } from "@mui/material";
-import { useState } from "react";
 
 function App() {
   const [page, setPage] = useState(0);
