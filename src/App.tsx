@@ -22,6 +22,7 @@ function App() {
     data: billsResponse,
     isLoading: billsLoading,
     error: billsError,
+    refetch: refetchBills,
   } = useBills({
     skip: page * limit,
     limit: limit,
@@ -43,6 +44,7 @@ function App() {
         limit={limit}
         setPage={setPage}
         setLimit={setLimit}
+        onRetry={refetchBills}
       />
     </Container>
   );

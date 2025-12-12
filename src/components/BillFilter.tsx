@@ -7,7 +7,7 @@ import {
   Select,
 } from "@mui/material";
 
-import type { BillStatus } from "@/types/bills";
+import { BILL_STATUS, type BillStatus } from "@/types/bills";
 
 export function BillFilter({
   billStatus,
@@ -34,12 +34,11 @@ export function BillFilter({
           </Box>
         )}
       >
-        <MenuItem value="Current">Current</MenuItem>
-        <MenuItem value="Withdrawn">Withdrawn</MenuItem>
-        <MenuItem value="Enacted">Enacted</MenuItem>
-        <MenuItem value="Rejected">Rejected</MenuItem>
-        <MenuItem value="Defeated">Defeated</MenuItem>
-        <MenuItem value="Lapsed">Lapsed</MenuItem>
+        {BILL_STATUS.map((status: BillStatus) => (
+          <MenuItem key={status} value={status}>
+            {status}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

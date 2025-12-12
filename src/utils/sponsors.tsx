@@ -37,7 +37,6 @@ function renderSponsor(
 ): ReactNode {
   return (
     <Fragment key={index}>
-      {/** TODO: Figure out better way to do this */}
       {index > 0 && ", "}
       {isPrimary ? <strong>{name}</strong> : name}
     </Fragment>
@@ -142,7 +141,7 @@ export function formatSponsors(
         {firstSponsor.isPrimary ? (
           <strong>{truncatedName}...</strong>
         ) : (
-          `${truncatedName}...`
+          <>{truncatedName}...</>
         )}
       </>
     );

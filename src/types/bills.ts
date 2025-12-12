@@ -74,15 +74,18 @@ export interface ApiBillResponse {
   results: Bill[];
 }
 
-export type BillStatus =
-  | "Current"
-  | "Withdrawn"
-  | "Enacted"
-  | "Rejected"
-  | "Defeated"
-  | "Lapsed";
+export const BILL_STATUS = [
+  "Current",
+  "Withdrawn",
+  "Enacted",
+  "Rejected",
+  "Defeated",
+  "Lapsed",
+] as const;
+export type BillStatus = (typeof BILL_STATUS)[number];
 
-export type BillSource = "Government" | "Private Member";
+export const BILL_SOURCE = ["Government", "Private Member"] as const;
+export type BillSource = (typeof BILL_SOURCE)[number];
 
 export interface ApiBillQueryParams {
   skip: number;
