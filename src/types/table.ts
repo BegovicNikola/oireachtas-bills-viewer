@@ -12,4 +12,5 @@ export interface BillColumn {
   id: BillColumnId;
   label: string;
   render: (bill: Bill) => React.ReactNode;
+  align: "left" | "center" | "right";
 }

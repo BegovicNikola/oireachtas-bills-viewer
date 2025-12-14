@@ -2,38 +2,60 @@ import { format } from "date-fns";
 
 import { formatSponsors } from "@/utils/sponsors";
 
+import type { Bill } from "@/types/bills";
 import type { BillColumn } from "@/types/table";
+
+// Helper function for simple text columns
+function textColumn(
+  id: BillColumn["id"],
+  label: string,
+  accessor: (bill: Bill) => string,
+  align: BillColumn["align"],
+): BillColumn {
+  return {
+    id,
+    label,
+    render: accessor,
+    align,
+  };
+}
+
+// Helper function for formatted columns
+function formattedColumn(
+  id: BillColumn["id"],
+  label: string,
+  formatter: (bill: Bill) => React.ReactNode,
+  align: BillColumn["align"],
+): BillColumn {
+  return {
+    id,
+    label,
+    render: formatter,
+    align,
+  };
+}
 
 // Single source of truth for table columns
 export const billColumns: BillColumn[] = [
-  {
-    id: "number",
-    label: "Number",
-    render: (bill) => `${bill.billYear}/${bill.billNo}`,
-  },
-  {
-    id: "type",
-    label: "Type",
-    render: (bill) => bill.billType,
-  },
-  {
-    id: "source",
-    label: "Source",
-    render: (bill) => bill.source,
-  },
-  {
-    id: "status",
-    label: "Status",
-    render: (bill) => bill.status,
-  },
-  {
-    id: "sponsors",
-    label: "Sponsors",
-    render: (bill) => formatSponsors(bill.sponsors, 50),
-  },
-  {
-    id: "lastUpdated",
-    label: "Last Updated",
-    render: (bill) => format(bill.lastUpdated, "dd MMM yyyy"),
-  },
+  formattedColumn(
+    "number",
+    "Number",
+    (bill) => `${bill.billYear}/${bill.billNo}`,
+    "left",
+  ),
+  textColumn("type", "Type", (bill) => bill.billType, "left"),
+  textColumn("source", "Source", (bill) => bill.source, "left"),
+  textColumn("status", "Status", (bill) => bill.status, "left"),
+  formattedColumn(
+    "sponsors",
+    "Sponsors",
+    (bill) => formatSponsors(bill.sponsors, 50),
+    "left",
+  ),
+  formattedColumn(
+    "lastUpdated",
+    "Last Updated",
+    (bill) => format(bill.lastUpdated, "dd MMM yyyy"),
+    "right",
+  ),
 ];

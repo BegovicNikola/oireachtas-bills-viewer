@@ -7,7 +7,9 @@ export function BillTableHead() {
     <TableHead>
       <TableRow>
         {billColumns.map((col) => (
-          <TableCell key={col.id}>{col.label}</TableCell>
+          <TableCell key={col.id} align={col.align}>
+            {col.label}
+          </TableCell>
         ))}
       </TableRow>
     </TableHead>

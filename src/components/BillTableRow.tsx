@@ -8,7 +8,9 @@ export function BillTableRow({ bill }: { bill: Bill }) {
   return (
     <TableRow>
       {billColumns.map((col) => (
-        <TableCell key={col.id}>{col.render(bill)}</TableCell>
+        <TableCell key={col.id} align={col.align}>
+          {col.render(bill)}
+        </TableCell>
       ))}
     </TableRow>
   );
