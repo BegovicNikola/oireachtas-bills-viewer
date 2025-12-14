@@ -3,14 +3,16 @@ import { Fragment } from "react";
 import type { Sponsor } from "@/types/bills";
 import type { ReactNode } from "react";
 
-// Constants
-const SEPARATOR_LENGTH = 2; // ", "
-const ELLIPSIS_LENGTH = 3; // "..."
-
-// Types
 interface SponsorData {
   name: string;
   isPrimary: boolean;
+}
+
+/**
+ * Extracts sponsor name from API structure.
+ */
+function getSponsorName(sponsor: Sponsor): string {
+  return sponsor.sponsor.by?.showAs || sponsor.sponsor.as?.showAs || "N/A";
 }
 
 /**
@@ -18,42 +20,34 @@ interface SponsorData {
  */
 function extractAndSortSponsors(sponsors: Sponsor[]): SponsorData[] {
   return sponsors
-    .map((sponsor) => {
-      const name =
-        sponsor.sponsor.by?.showAs || sponsor.sponsor.as?.showAs || "N/A";
-      const isPrimary = sponsor.sponsor.isPrimary === true;
-      return { name, isPrimary };
-    })
+    .map((sponsor) => ({
+      name: getSponsorName(sponsor),
+      isPrimary: sponsor.sponsor.isPrimary === true,
+    }))
     .sort((a, b) => Number(b.isPrimary) - Number(a.isPrimary));
 }
 
 /**
- * Renders a single sponsor with separator and bold formatting for primary sponsors.
- */
-function renderSponsor(
-  name: string,
-  isPrimary: boolean,
-  index: number,
-): ReactNode {
-  return (
-    <Fragment key={index}>
-      {index > 0 && ", "}
-      {isPrimary ? <strong>{name}</strong> : name}
-    </Fragment>
-  );
-}
-
-/**
- * Renders a list of sponsors.
+ * Renders a list of sponsors with separators and formatting.
  */
 function renderSponsors(sponsors: SponsorData[]): ReactNode {
   return (
     <>
-      {sponsors.map(({ name, isPrimary }, index) =>
-        renderSponsor(name, isPrimary, index),
-      )}
+      {sponsors.map(({ name, isPrimary }, index) => (
+        <Fragment key={index}>
+          {index > 0 && ", "}
+          {isPrimary ? <strong>{name}</strong> : name}
+        </Fragment>
+      ))}
     </>
   );
+}
+
+/**
+ * Calculates the total length of sponsors when joined.
+ */
+function calculateTotalLength(sponsors: SponsorData[]): number {
+  return sponsors.map(({ name }) => name).join(", ").length;
 }
 
 /**
@@ -64,19 +58,20 @@ function findTruncationPoint(
   sponsors: SponsorData[],
   maxLength: number,
 ): number {
+  const ELLIPSIS_LENGTH = 3; // "..."
+  const SEPARATOR_LENGTH = 2; // ", "
+
   let currentLength = 0;
   let lastCompleteIndex = -1;
 
   for (let i = 0; i < sponsors.length; i++) {
     const sponsor = sponsors[i];
     const separatorLength = i > 0 ? SEPARATOR_LENGTH : 0;
-    const sponsorLength = sponsor.name.length;
+    const totalNeeded =
+      currentLength + separatorLength + sponsor.name.length + ELLIPSIS_LENGTH;
 
-    if (
-      currentLength + separatorLength + sponsorLength + ELLIPSIS_LENGTH <=
-      maxLength
-    ) {
-      currentLength += separatorLength + sponsorLength;
+    if (totalNeeded <= maxLength) {
+      currentLength += separatorLength + sponsor.name.length;
       lastCompleteIndex = i;
     } else {
       break;
@@ -87,26 +82,28 @@ function findTruncationPoint(
 }
 
 /**
- * Truncates a string to fit within maxLength, ensuring it ends on a complete word.
+ * Truncates a string at word boundaries when possible.
  */
 function truncateWord(text: string, maxLength: number): string {
   if (text.length <= maxLength) {
     return text;
   }
 
-  // Find the last space before maxLength
   const truncated = text.slice(0, maxLength);
   const lastSpaceIndex = truncated.lastIndexOf(" ");
 
-  // If no space found or space is too early, just cut at maxLength
+  // If no space or space is too early, cut at maxLength
   if (lastSpaceIndex === -1 || lastSpaceIndex < maxLength * 0.5) {
     return truncated;
   }
 
-  // Return up to the last complete word
   return truncated.slice(0, lastSpaceIndex);
 }
 
+/**
+ * Formats and renders sponsors with truncation support.
+ * Primary sponsors are bolded and sorted first.
+ */
 export function formatSponsors(
   sponsors: Sponsor[] | null,
   maxLength: number = 100,
@@ -116,38 +113,33 @@ export function formatSponsors(
   }
 
   const sortedSponsors = extractAndSortSponsors(sponsors);
+  const totalLength = calculateTotalLength(sortedSponsors);
 
-  // Build the full text string to calculate length
-  const fullText = sortedSponsors.map(({ name }) => name).join(", ");
-  const totalLength = fullText.length;
-
-  // If within limit, return formatted JSX
+  // If everything fits, render all
   if (totalLength <= maxLength) {
     return renderSponsors(sortedSponsors);
   }
 
-  // Find truncation point
+  // Find how many sponsors fit
   const lastCompleteIndex = findTruncationPoint(sortedSponsors, maxLength);
+  const ELLIPSIS_LENGTH = 3;
 
-  // If we couldn't fit at least one sponsor, show first sponsor truncated
+  // Edge case: even first sponsor doesn't fit - truncate it
   if (lastCompleteIndex === -1) {
     const firstSponsor = sortedSponsors[0];
     const truncatedName = truncateWord(
       firstSponsor.name,
       maxLength - ELLIPSIS_LENGTH,
     );
-    return (
-      <>
-        {firstSponsor.isPrimary ? (
-          <strong>{truncatedName}...</strong>
-        ) : (
-          <>{truncatedName}...</>
-        )}
-      </>
+
+    return firstSponsor.isPrimary ? (
+      <strong>{truncatedName}...</strong>
+    ) : (
+      <>{truncatedName}...</>
     );
   }
 
-  // Build truncated JSX up to lastCompleteIndex
+  // Render sponsors that fit, then ellipsis
   return (
     <>
       {renderSponsors(sortedSponsors.slice(0, lastCompleteIndex + 1))}
