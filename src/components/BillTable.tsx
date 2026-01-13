@@ -6,7 +6,7 @@ import { BillTableFooter } from "@/components/BillTableFooter";
 import { BillTableHead } from "@/components/BillTableHead";
 import { BillTableLoading } from "@/components/BillTableLoading";
 
-import type { ApiBillResponse } from "@/types/bills";
+import type { ApiBillResponse, Bill } from "@/types/bills";
 
 export function BillTable({
   bills,
@@ -14,6 +14,7 @@ export function BillTable({
   error,
   page,
   limit,
+  onBillClick,
   setPage,
   setLimit,
   onRetry,
@@ -23,6 +24,7 @@ export function BillTable({
   error: Error | null;
   page: number;
   limit: number;
+  onBillClick: (bill: Bill) => void;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
   onRetry: () => void;
@@ -39,7 +41,7 @@ export function BillTable({
     <TableContainer component={Paper}>
       <Table>
         <BillTableHead />
-        <BillTableBody bills={bills?.results ?? []} />
+        <BillTableBody bills={bills?.results ?? []} onBillClick={onBillClick} />
         <BillTableFooter
           total={bills?.head.counts.billCount ?? 0}
           page={page}
