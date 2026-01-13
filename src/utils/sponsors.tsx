@@ -34,7 +34,7 @@ function renderSponsors(sponsors: SponsorData[]): ReactNode {
   return (
     <>
       {sponsors.map(({ name, isPrimary }, index) => (
-        <Fragment key={index}>
+        <Fragment key={`sponsor-${index}`}>
           {index > 0 && ", "}
           {isPrimary ? <strong>{name}</strong> : name}
         </Fragment>

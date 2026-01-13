@@ -18,7 +18,7 @@ export function BillTableBody({
       {bills.length > 0 ? (
         bills.map((bill) => (
           <BillTableRow
-            key={`${bill.billYear}/${bill.billNo}`}
+            key={`table-row-${bill.billYear}/${bill.billNo}`}
             bill={bill}
             onBillClick={onBillClick}
           />

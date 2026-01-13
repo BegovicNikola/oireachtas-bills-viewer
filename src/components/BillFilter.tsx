@@ -29,13 +29,13 @@ export function BillFilter({
         renderValue={(selected) => (
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
             {(selected as BillStatus[]).map((value) => (
-              <Chip key={value} label={value} size="medium" />
+              <Chip key={`chip-${value}`} label={value} size="medium" />
             ))}
           </Box>
         )}
       >
         {BILL_STATUS.map((status: BillStatus) => (
-          <MenuItem key={status} value={status}>
+          <MenuItem key={`menu-item-${status}`} value={status}>
             {status}
           </MenuItem>
         ))}

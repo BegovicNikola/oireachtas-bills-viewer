@@ -56,6 +56,7 @@ function App() {
         onRetry={refetchBills}
       />
       <BillDetailModal
+        key={`dialog-${selectedBill?.billYear}/${selectedBill?.billNo}`}
         open={isModalOpen}
         bill={selectedBill}
         onClose={() => setIsModalOpen(false)}

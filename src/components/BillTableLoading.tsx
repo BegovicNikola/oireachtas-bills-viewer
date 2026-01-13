@@ -18,9 +18,9 @@ export function BillTableLoading({ limit }: { limit: number }) {
         <BillTableHead />
         <TableBody>
           {Array.from({ length: limit }).map((_, index) => (
-            <TableRow key={index}>
+            <TableRow key={`loading-table-row-${index}`}>
               {billColumns.map((col) => (
-                <TableCell key={col.id}>
+                <TableCell key={`loading-table-cell-${col.id}`}>
                   <Skeleton variant="text" width="100%" />
                 </TableCell>
               ))}

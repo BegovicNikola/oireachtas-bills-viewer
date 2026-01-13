@@ -18,7 +18,7 @@ export function BillTableRow({
       onClick={() => onBillClick(bill)}
     >
       {billColumns.map((col) => (
-        <TableCell key={col.id} align={col.align}>
+        <TableCell key={`table-cell-${col.id}`} align={col.align}>
           {col.render(bill)}
         </TableCell>
       ))}
