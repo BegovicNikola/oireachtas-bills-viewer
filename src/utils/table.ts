@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 
+import { getBillId } from "@/utils/bill";
 import { formatSponsors } from "@/utils/sponsors";
 
 import type { Bill } from "@/types/bills";
@@ -37,12 +38,7 @@ function formattedColumn(
 
 // Single source of truth for table columns
 export const billColumns: BillColumn[] = [
-  formattedColumn(
-    "number",
-    "Number",
-    (bill) => `${bill.billYear}/${bill.billNo}`,
-    "left",
-  ),
+  formattedColumn("number", "Number", (bill) => getBillId(bill), "left"),
   textColumn("type", "Type", (bill) => bill.billType, "left"),
   textColumn("source", "Source", (bill) => bill.source, "left"),
   textColumn("status", "Status", (bill) => bill.status, "left"),

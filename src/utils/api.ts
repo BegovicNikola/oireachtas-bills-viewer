@@ -7,6 +7,18 @@ import type {
   RawApiBillResponse,
 } from "@/types/bills";
 
+export async function mockFavouriteBill(
+  billId: string,
+  isFavourite: boolean,
+): Promise<void> {
+  // Simulate a network delay (realistic mock)
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  console.log(
+    `[API Request] ${isFavourite ? "Favouriting" : "Unfavouriting"} bill: ${billId}`,
+  );
+}
+
 export function buildQueryString(params: ApiBillQueryParams): string {
   const searchParams = new URLSearchParams();
 

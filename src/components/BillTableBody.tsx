@@ -2,6 +2,7 @@ import { TableBody } from "@mui/material";
 
 import { BillTableRow } from "@/components/BillTableRow";
 import { EmptyTableRow } from "@/components/common/EmptyTableRow";
+import { getBillId } from "@/utils/bill";
 import { billColumns } from "@/utils/table";
 
 import type { Bill } from "@/types/bills";
@@ -18,7 +19,7 @@ export function BillTableBody({
       {bills.length > 0 ? (
         bills.map((bill) => (
           <BillTableRow
-            key={`table-row-${bill.billYear}/${bill.billNo}`}
+            key={`table-row-${getBillId(bill)}`}
             bill={bill}
             onBillClick={onBillClick}
           />
